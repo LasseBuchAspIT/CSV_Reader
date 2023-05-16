@@ -9,6 +9,8 @@ namespace Lib
         {
             List<T> list = new List<T>();
             string line;
+
+            //create instance of creator
             Creator<T> creator = new();
 
             using (StreamReader reader = new StreamReader(stream))
@@ -18,7 +20,10 @@ namespace Lib
                 {
                     try
                     {
+                        //split line into seperate values
                         string[] args = line.Split(";");
+
+                        //pass valuesi into creator to convert to object and add to list
                         list.Add(creator.CreateT(args.ToList()));
                         Console.WriteLine("Object added to list Succesfully");
                     }

@@ -57,12 +57,14 @@ namespace Lib
                 else if(constructors[0].GetParameters()[i].ParameterType == typeof(DateTime))
                 {
                     //convert to datetime
+                    throw new NotImplementedException();
                 }
                 else if(constructors[0].GetParameters()[i].ParameterType == typeof(bool))
                 {
                     //convert to bool
+                    throw new NotImplementedException();
                 }
-                
+
             }
             return returnList;
         }
