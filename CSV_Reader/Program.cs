@@ -1,4 +1,14 @@
-﻿using Lib;
+﻿using GenHTTP.Api.Content.Authentication;
+using GenHTTP.Engine;
+using GenHTTP.Modules.Authentication;
+using GenHTTP.Modules.Authentication.ApiKey;
+using GenHTTP.Modules.Basics;
+using GenHTTP.Modules.IO;
+using GenHTTP.Modules.Layouting;
+using GenHTTP.Modules.Practices;
+using GenHTTP.Modules.Security;
+using GenHTTP.Modules.Webservices;
+using System.Reflection;
 
 namespace CSV_Reader
 {
@@ -6,15 +16,19 @@ namespace CSV_Reader
     {
         static void Main(string[] args)
         {
-            Creator<TestClass> creator = new(); 
-            List<string> para = new List<string>();
-            para.Add("Test");
-            para.Add("2");
-            para.Add("Test");
+            var assembly = Assembly.GetExecutingAssembly();
 
+            var PageLayout = Layout.Create()
+                 //.AddService<TestService>("Service")
+                 .Add(CorsPolicy.Permissive())
+                 .Fallback(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])))
+                 .Index(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])));
 
-            TestClass result = creator.CreateT(para);
-            Console.WriteLine(result.ToString());
+            Host.Create()
+                .Console()
+                .Defaults()
+                .Handler(PageLayout)
+                .Run();
         }
     }
 }
