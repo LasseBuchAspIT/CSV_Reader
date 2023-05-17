@@ -11,27 +11,35 @@ namespace Lib
     {
         DbSet<T> dbSet;
         Reader<T> reader;
+        DbContext dbContext;
 
-        public Adder(DbSet<T> dbSet)
+        public Adder(DbContext context)
         {
-            this.dbSet = dbSet;
+            dbSet = context.Set<T>();
             reader = new Reader<T>();
+            dbContext = context;
         }
 
-        private void AddListToDb(List<T> list)
+        private void AddListToDb(List<T> list, bool deleteExisitng)
         {
+            if (deleteExisitng)
+            {
+                foreach (T item in dbSet)
+                {
+                    dbSet.Remove(item);
+                }
+            }
             foreach (T item in list) 
             {
                 dbSet.Add(item);
             }
+            dbContext.SaveChanges();
         }
 
         public void AddStreamToDb(Stream stream)
         {
-            foreach(T item in reader.ConvertStreamToObjects(stream).Item1)
-            {
-                dbSet.Add(item);
-            }
+            (List<T> list, bool delete) values = reader.ConvertStreamToObjects(stream);
+            AddListToDb(values.list, values.delete);
         }
 
     }

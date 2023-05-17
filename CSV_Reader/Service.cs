@@ -15,18 +15,11 @@ namespace CSV_Reader
     public class Service
     {
         CsvProgramTestContext context = new();
-        Reader<Account> reader = new();
+        Adder<Account> adder = new(new CsvProgramTestContext());
         [ResourceMethod(RequestMethod.PUT)]
         public ValueTask<Task> AddFile(bool deleteExisting, Stream input, IRequest request)
         {
-
-
-            List<Account> accounts = reader.ConvertStreamToObjects(input).list;
-
-            foreach (Account account in accounts) 
-            {
-                Console.WriteLine(account.CostumerName);
-            }
+            adder.AddStreamToDb(input);
 
             return new ValueTask<Task>();
         }
