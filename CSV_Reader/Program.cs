@@ -22,7 +22,7 @@ namespace CSV_Reader
             var PageLayout = Layout.Create()
                  .AddService<Service>("Service")
                  .Add(CorsPolicy.Permissive())
-                 //.Fallback(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])))
+                 .Fallback(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])))
                  .Index(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])));
 
 

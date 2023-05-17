@@ -15,9 +15,9 @@ namespace Lib
 
         public Adder(DbContext context)
         {
-            dbSet = context.Set<T>();
-            reader = new Reader<T>();
             dbContext = context;
+            dbSet = dbContext.Set<T>();
+            reader = new Reader<T>();
         }
 
         private void AddListToDb(List<T> list, bool deleteExisitng)
