@@ -63,7 +63,7 @@
     </div>
     <script>
         async function getAccounts() {
-            const response = await fetch("http://localhost:8080/Test");
+            const response = await fetch("http://localhost:8080/Service");
             const jsonData = await response.json();
 
             var tableHTML = "<tr>";
@@ -90,7 +90,7 @@
                 alert("Vælg venligst en fil")
             }
             else {
-                const url = 'http://localhost:8080/Service';
+                const url = 'http://localhost:8080/Service/AddFile';
                 var file = document.getElementById("fileinput").files[0];
                 var deleteExisting = document.getElementById("checkBox").checked;
                 var formData = new FormData();

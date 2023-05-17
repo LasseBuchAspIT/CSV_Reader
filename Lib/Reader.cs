@@ -33,6 +33,8 @@ namespace Lib
                     }
                 }
 
+                reader.Read();
+
                 //Converts to Objects
                 while ((line = reader.ReadLine()) != null)
                 {

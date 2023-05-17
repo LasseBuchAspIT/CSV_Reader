@@ -32,4 +32,18 @@ public partial class Account
     public string? Vip { get; set; }
 
     public int? UserId { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is Account a)
+        {
+            if(a.CostumerNumber == CostumerNumber)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

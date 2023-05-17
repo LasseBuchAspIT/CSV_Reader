@@ -14,14 +14,26 @@ namespace CSV_Reader
 {
     public class Service
     {
-        CsvProgramTestContext context = new();
+        CsvProgramTestContext context = new CsvProgramTestContext();
         Adder<Account> adder = new(new CsvProgramTestContext());
-        [ResourceMethod(RequestMethod.PUT)]
+        [ResourceMethod(RequestMethod.PUT, "AddFile")]
         public ValueTask<Task> AddFile(bool deleteExisting, Stream input, IRequest request)
         {
             adder.AddStreamToDb(input);
 
             return new ValueTask<Task>();
+        }
+
+        [ResourceMethod("GetAll")]
+        public List<Account> GetAll()
+        {
+            return context.Accounts.ToList();
+        }
+
+        [ResourceMethod("GetById")]
+        public Account GetAccountById(int id) 
+        {
+            return context.Accounts.Where(a => a.CostumerNumber == id).FirstOrDefault();
         }
     }
 }

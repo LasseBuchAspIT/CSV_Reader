@@ -40,7 +40,14 @@ namespace Lib
                 //find datatype to convert to
                 if (constructors[0].GetParameters()[i].ParameterType == typeof(string))
                 {
-                    returnList.Add(para[i]);    
+                    if (string.IsNullOrEmpty(para[i]))
+                    {
+                        returnList.Add(null);
+                    }
+                    else
+                    {
+                        returnList.Add(para[i]);    
+                    }
                 }
                 else if(constructors[0].GetParameters()[i].ParameterType == typeof(int))
                 {
