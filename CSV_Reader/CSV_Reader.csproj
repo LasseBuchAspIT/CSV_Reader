@@ -8,20 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="index.html" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="index.html" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="GenHTTP.Api" Version="6.4.0" />
     <PackageReference Include="GenHTTP.Core" Version="6.4.0" />
     <PackageReference Include="GenHTTP.Modules.Authentication" Version="6.4.0" />
     <PackageReference Include="GenHTTP.Modules.Basics" Version="6.4.0" />
     <PackageReference Include="GenHTTP.Modules.IO" Version="6.4.0" />
-    <PackageReference Include="GenHTTP.Modules.Webservices" Version="6.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
       <PrivateAssets>all</PrivateAssets>
