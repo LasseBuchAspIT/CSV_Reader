@@ -18,7 +18,7 @@ namespace Lib
                 var constructors = t.GetConstructors();
                 while (paraValidated.Count < constructors[0].GetParameters().Length)
                 {
-                    //add null values until para length matches correct constructor length, done to avoid errors from lacking null values in constructor
+                    //add null values until para length matches correct constructor length, done to avoid errors from too short params arr
                     paraValidated.Add(null);
                 }
                 return (T)Activator.CreateInstance(typeof(T), paraValidated.ToArray());
