@@ -8,6 +8,7 @@ using GenHTTP.Modules.Layouting;
 using GenHTTP.Modules.Practices;
 using GenHTTP.Modules.Security;
 using GenHTTP.Modules.Webservices;
+using Lib;
 using System.Reflection;
 
 namespace CSV_Reader
@@ -19,10 +20,11 @@ namespace CSV_Reader
             var assembly = Assembly.GetExecutingAssembly();
 
             var PageLayout = Layout.Create()
-                 //.AddService<TestService>("Service")
+                 .AddService<Service>("Service")
                  .Add(CorsPolicy.Permissive())
                  .Fallback(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])))
                  .Index(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])));
+
 
             Host.Create()
                 .Console()
