@@ -1,13 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <PublishSingleFile>true</PublishSingleFile>
-	  <SelfContained>true</SelfContained>
-	  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-CSV_Service-589b6ef3-4011-4be9-9707-752056bfe97e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,17 +14,20 @@
 
   <ItemGroup>
     <EmbeddedResource Include="index.html" />
+    <EmbeddedResource Include="Settings.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="GenHTTP.Api" Version="6.4.0" />
     <PackageReference Include="GenHTTP.Core" Version="6.4.0" />
+    <PackageReference Include="GenHTTP.Modules.Basics" Version="6.4.0" />
+    <PackageReference Include="GenHTTP.Modules.IO" Version="6.4.0" />
     <PackageReference Include="GenHTTP.Modules.Webservices" Version="6.4.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="7.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
     <ProjectReference Include="..\Lib\Lib.csproj" />
   </ItemGroup>
-
 </Project>

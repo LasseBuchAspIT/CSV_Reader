@@ -1,8 +1,4 @@
-﻿using GenHTTP.Api.Content.Authentication;
-using GenHTTP.Engine;
-using GenHTTP.Modules.Authentication;
-using GenHTTP.Modules.Authentication.ApiKey;
-using GenHTTP.Modules.Basics;
+﻿using GenHTTP.Engine;
 using GenHTTP.Modules.IO;
 using GenHTTP.Modules.Layouting;
 using GenHTTP.Modules.Practices;
@@ -32,7 +28,6 @@ namespace CSV_Reader
                 .Defaults()
                 .Handler(PageLayout)
                 .Run();
-            
         }
     }
 }

@@ -1,0 +1,2 @@
+Port =8080,
+ConnectionString=Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CSV_Program_Test;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False
