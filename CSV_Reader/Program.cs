@@ -28,10 +28,11 @@ namespace CSV_Reader
 
             Host.Create()
                 .Console()
+                .Port(SettingsReader.GetPort())
                 .Defaults()
                 .Handler(PageLayout)
                 .Run();
-
+            
         }
     }
 }
