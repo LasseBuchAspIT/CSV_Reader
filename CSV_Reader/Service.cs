@@ -22,7 +22,7 @@ namespace CSV_Reader
 
         public Service()
         {
-            connectionString = GetConnectionStringFromSettings();
+            connectionString = SettingsReader.GetConnectionString();
             context = new("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CSV_Program_Test;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
             adder = new Adder<Account, CsvProgramTestContext>(connectionString);
         }
@@ -52,27 +52,6 @@ namespace CSV_Reader
             return context.Accounts.Where(a => a.CostumerNumber == id).FirstOrDefault();
         }
 
-        private string GetConnectionStringFromSettings()
-        {
-            string[] connectionString = new string[2] {"", ""};
-            try
-            {
-                using (StreamReader streamReader = new("Settings.txt"))
-                {
-                    string settings = streamReader.ReadToEnd();
-                    string[] args = settings.Split(',');
-
-                    if (args.Any(a => a.Contains("ConnectionString")))
-                    {
-                        connectionString = args.Where(a => a.Contains("ConnectionString")).FirstOrDefault().Split('=', 2);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Settings file could not be read\n{ex.Message}");
-            }
-            return connectionString[1];
-        }
+       
     }
 }
