@@ -38,6 +38,10 @@ namespace Lib
                 //Converts to Objects
                 while ((line = reader.ReadLine()) != null)
                 {
+                    if (line.Contains("WebKitFormBoundary")) 
+                    {
+                        return (list, delete);
+                    }
                     try
                     {
                         //split line into seperate values

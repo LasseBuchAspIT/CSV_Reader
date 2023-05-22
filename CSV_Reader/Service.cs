@@ -17,14 +17,14 @@ namespace CSV_Reader
     {
         private readonly string connectionString;
         CsvProgramTestContext context;
-        Adder<Account> adder;
+        Adder<Account, CsvProgramTestContext> adder;
 
 
         public Service()
         {
             connectionString = GetConnectionStringFromSettings();
             context = new("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CSV_Program_Test;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
-            adder = new Adder<Account>(new CsvProgramTestContext(connectionString));
+            adder = new Adder<Account, CsvProgramTestContext>(connectionString);
         }
 
 
@@ -32,7 +32,10 @@ namespace CSV_Reader
         [ResourceMethod(RequestMethod.PUT, "AddFile")]
         public ValueTask<Task> AddFile(bool deleteExisting, Stream input, IRequest request)
         {
+
             adder.AddStreamToDb(input);
+
+            
 
             return new ValueTask<Task>();
         }
@@ -57,7 +60,7 @@ namespace CSV_Reader
                 using (StreamReader streamReader = new("Settings.txt"))
                 {
                     string settings = streamReader.ReadToEnd();
-                    string[] args = settings.Split(';');
+                    string[] args = settings.Split(',');
 
                     if (args.Any(a => a.Contains("ConnectionString")))
                     {

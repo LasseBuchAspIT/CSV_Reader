@@ -1,51 +1,57 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Lib
 {
-    public class Adder<T> where T : class
+    public class Adder<T1, T2> where T1 : class where T2 : DbContext
     {
-        DbSet<T> dbSet;
-        Reader<T> reader;
+        Reader<T1> reader;
         DbContext dbContext;
+        DbSet<T1> dbSet;
+        CustomDbContextFactory<T2> customDb = new();
 
-        public Adder(DbContext context)
+        public Adder(string ConnectionString)
         {
-            dbContext = context;
-            dbSet = dbContext.Set<T>();
-            reader = new Reader<T>();
+            //no clue why this is needed, need to find that out
+            try
+            {
+                Console.WriteLine("Connecting to: " + ConnectionString);
+                this.reader = new Reader<T1>();
+                this.dbContext = customDb.CreateDbContext(ConnectionString);
+                dbContext.Database.SetConnectionString(ConnectionString);
+                dbContext.Database.OpenConnection();
+                this.dbSet = dbContext.Set<T1>();
+                Console.WriteLine("Succesfully connected");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid ConnectionString: " + ex.Message);
+            }
+
         }
 
-        private void AddListToDb(List<T> list, bool deleteExisitng)
-        {   
+        private void AddListToDb(List<T1> list, bool deleteExisitng)
+        {
             //delete all entries in database
             if (deleteExisitng)
             {
-                foreach (T item in dbSet)
+                foreach (T1 item in dbContext.Set<T1>())
                 {
-                    dbSet.Remove(item);
-                }
-            }
-            else
-            {
-                //replace all items which already exist in db with the updated versions (done by deleting old to avoid conflicts)
-                //consider changing this to actually replacing instead of deleting and adding new
-                foreach(T item in list)
-                {
-                    if (dbSet.Any(a => a.Equals(item)))
-                    {
-                        dbSet.Remove(item);
-                    }
+                    dbContext.Set<T1>().Remove(item);
                 }
             }
 
-            //add all the items from list to db
-            foreach (T item in list) 
+            //add all the items from list to dbx
+            foreach (T1 item in list) 
             {
+                if (dbSet.Any(a => a.Equals(item)))
+                {
+                    dbSet.Remove(dbSet.Where(a => a.Equals(item)).FirstOrDefault());
+                }
                 dbSet.Add(item);
             }
 
@@ -59,10 +65,25 @@ namespace Lib
         {
             //trupple to only need to convert stream once
             //convert stream to a list of objects<T> and a bool for checking if should delete existing database
-            (List<T> list, bool delete) values = reader.ConvertStreamToObjects(stream);
+            (List<T1> list, bool delete) values = reader.ConvertStreamToObjects(stream);
 
             //add values to db
             AddListToDb(values.list, values.delete);
+        }
+
+        public interface ICustomDbContextFactory<out T> where T : DbContext
+        {
+            T CreateDbContext(string connectionString);
+        }
+
+        public class CustomDbContextFactory<T> : ICustomDbContextFactory<T> where T : DbContext
+        {
+            public T CreateDbContext(string connectionString)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<T>();
+                optionsBuilder.UseSqlServer(connectionString);
+                return System.Activator.CreateInstance(typeof(T), optionsBuilder.Options) as T;
+            }
         }
 
     }
