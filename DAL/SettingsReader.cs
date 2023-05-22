@@ -52,7 +52,7 @@ namespace Lib
                     }
                     else
                     {
-                        Console.WriteLine("invalid port, port set to 8080");
+                        Console.WriteLine("invalid port... port set to 8080");
                     }
                 }
                 return port;
