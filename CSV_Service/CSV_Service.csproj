@@ -14,11 +14,14 @@
 
   <ItemGroup>
     <EmbeddedResource Include="index.html" />
-    <EmbeddedResource Include="Settings.txt" />
+    <EmbeddedResource Include="Settings.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="GenHTTP.Core" Version="6.4.0" />
+    <PackageReference Include="GenHTTP.Modules.Authentication" Version="6.4.0" />
     <PackageReference Include="GenHTTP.Modules.Webservices" Version="6.4.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
   </ItemGroup>

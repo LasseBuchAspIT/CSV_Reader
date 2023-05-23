@@ -16,20 +16,21 @@ namespace Lib
 
         public Adder(string ConnectionString)
         {
-            //no clue why this is needed, need to find that out
             try
             {
-                Console.WriteLine("Connecting to: " + ConnectionString);
                 this.reader = new Reader<T1>();
+                Console.WriteLine("creting customDbContext");
                 this.dbContext = customDb.CreateDbContext(ConnectionString);
                 dbContext.Database.SetConnectionString(ConnectionString);
+                Console.WriteLine("Connecting to: " + dbContext.Database.GetConnectionString());
                 dbContext.Database.OpenConnection();
-                this.dbSet = dbContext.Set<T1>();
                 Console.WriteLine("Succesfully connected");
+                Console.WriteLine("Creating DbSet");
+                this.dbSet = dbContext.Set<T1>();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Invalid ConnectionString: " + ex.Message);
+                Console.WriteLine("Invalid ConnectionString... Error: " + ex.Message);
             }
 
         }
