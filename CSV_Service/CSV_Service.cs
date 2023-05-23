@@ -13,6 +13,7 @@ using GenHTTP.Modules.Practices;
 using GenHTTP.Modules.Security;
 using GenHTTP.Modules.Webservices;
 using Lib;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CSV_Service
 {
@@ -29,6 +30,7 @@ namespace CSV_Service
                  .Index(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])));
 
 
+            Console.WriteLine("GenHttp Starting on port " + SettingsReader.GetPort());
             GenHTTP.Engine.Host.Create()
                     .Console()
                     .Port(SettingsReader.GetPort())

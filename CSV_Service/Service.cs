@@ -15,7 +15,7 @@ namespace CSV_Reader
         public Service()
         {
             connectionString = SettingsReader.GetConnectionString();
-            context = new("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CSV_Program_Test;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            context = new(connectionString);
             adder = new Adder<Account, CsvProgramTestContext>(connectionString);
         }
 
