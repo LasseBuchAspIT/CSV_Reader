@@ -64,12 +64,26 @@ namespace Lib
                 else if(constructors[0].GetParameters()[i].ParameterType == typeof(DateTime))
                 {
                     //convert to datetime
-                    throw new NotImplementedException();
+                    if (DateTime.TryParse(para[i], out DateTime result))
+                    {
+                        returnList.Add(result);
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Value {i} could not be converted to correct type. Check formatting of csv file...");
+                    }
                 }
                 else if(constructors[0].GetParameters()[i].ParameterType == typeof(bool))
                 {
                     //convert to bool
-                    throw new NotImplementedException();
+                    if (bool.TryParse(para[i], out bool result))
+                    {
+                        returnList.Add(result);
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Value {i} could not be converted to correct type. Check formatting of csv file...");
+                    }
                 }
 
             }
