@@ -63,7 +63,6 @@ namespace Lib
                 }
                 else if(constructors[0].GetParameters()[i].ParameterType == typeof(DateTime))
                 {
-                    //convert to datetime
                     if (DateTime.TryParse(para[i], out DateTime result))
                     {
                         returnList.Add(result);
@@ -75,7 +74,6 @@ namespace Lib
                 }
                 else if(constructors[0].GetParameters()[i].ParameterType == typeof(bool))
                 {
-                    //convert to bool
                     if (bool.TryParse(para[i], out bool result))
                     {
                         returnList.Add(result);

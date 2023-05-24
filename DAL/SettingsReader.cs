@@ -8,37 +8,42 @@ namespace Lib
 {
     public static class SettingsReader
     {
-        public static string GetConnectionString()
+        //checks parsed location for a connectionString, returns only the connectionString itself
+        public static string GetConnectionString(string location)
         {
             string[] connectionString = new string[2] { "", "" };
             try
             {
-                using (StreamReader streamReader = new("Settings.txt"))
+                using (StreamReader streamReader = new(location))
                 {
                     string settings = streamReader.ReadToEnd();
                     string[] args = settings.Split(',');
 
-                    if (args.Any(a => a.Contains("ConnectionString")))
+                    //split into before and after =, ConnectiongString should be in second part
+                    if (args.Any(a => a.ToUpper().Contains("CONNECTIONSTRING")))
                     {
-                        connectionString = args.Where(a => a.Contains("ConnectionString")).FirstOrDefault().Split('=', 2);
+                        connectionString = args.Where(a => a.ToUpper().Contains("CONNECTIONSTRING")).FirstOrDefault().Split('=', 2);
                     }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Settings file could not be read\n{ex.Message}");
-                return "ConnectionString not found";
+                throw new ArgumentNullException(ex.Message);
             }
             return connectionString[1];
         }
 
-        public static ushort GetPort()
+        //gets port from parsed location
+        //same code as connectionstring but for port
+        public static ushort GetPort(string location)
         {
+            //standard port
             ushort port = 8080;
 
             string[] words = new string[2];
 
-            using (StreamReader streamReader = new("Settings.txt"))
+            using (StreamReader streamReader = new(location))
             {
                 string settings = streamReader.ReadToEnd();
                 string[] args = settings.Split(',');

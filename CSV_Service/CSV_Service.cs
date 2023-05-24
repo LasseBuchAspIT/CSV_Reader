@@ -17,6 +17,7 @@ using GenHTTP.Modules.Webservices;
 using Lib;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using CSV_Reader.DAL;
+using Microsoft.Identity.Client;
 
 namespace CSV_Service
 {
@@ -25,16 +26,16 @@ namespace CSV_Service
         public void Run()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            CsvProgramTestContext context = new(SettingsReader.GetConnectionString());
+            CsvProgramTestContext context = new(SettingsReader.GetConnectionString("Settings.txt"));
 
+            //Add all users from db to authentication
             var auth = BasicAuthentication.Create();
-
             foreach(User user in context.Users)
             {
                 auth.Add(user.Name, user.Password);
             }
 
-
+            //Create layout
             var PageLayout = Layout.Create()
             .AddService<Service>("Service")
             .Add(CorsPolicy.Permissive())
@@ -42,11 +43,11 @@ namespace CSV_Service
             .Authentication(auth)
             .Index(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])));
 
-
-            Console.WriteLine("GenHttp Starting on port " + SettingsReader.GetPort());
+            //need to move port to seperate var
+            Console.WriteLine("GenHttp Starting on port " + SettingsReader.GetPort("Settings.txt"));
             GenHTTP.Engine.Host.Create()
                     .Console()
-                    .Port(SettingsReader.GetPort())
+                    .Port(SettingsReader.GetPort("Settings.txt"))
                     .Defaults()
                     .Handler(PageLayout)
                     .Run();

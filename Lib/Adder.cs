@@ -19,12 +19,15 @@ namespace Lib
             try
             {
                 this.reader = new Reader<T1>();
-                Console.WriteLine("creting customDbContext");
+                Console.WriteLine("creating customDbContext");
                 this.dbContext = customDb.CreateDbContext(ConnectionString);
+
                 dbContext.Database.SetConnectionString(ConnectionString);
                 Console.WriteLine("Connecting to: " + dbContext.Database.GetConnectionString());
+
                 dbContext.Database.OpenConnection();
                 Console.WriteLine("Succesfully connected");
+
                 Console.WriteLine("Creating DbSet");
                 this.dbSet = dbContext.Set<T1>();
             }
@@ -77,6 +80,7 @@ namespace Lib
             T CreateDbContext(string connectionString);
         }
 
+        //custom dbFactory to be able to create desired db with connectionstring
         public class CustomDbContextFactory<T> : ICustomDbContextFactory<T> where T : DbContext
         {
             public T CreateDbContext(string connectionString)
