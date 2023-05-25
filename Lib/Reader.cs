@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Lib
 {
@@ -15,9 +16,8 @@ namespace Lib
             Creator<T> creator = new();
 
 
-            using (StreamReader reader = new StreamReader(stream))
+            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
             {
-
                 //read only first part of stream which contains headers and the deleteExisting bool
                 while ((line = reader.ReadLine()) != null)
                 {
