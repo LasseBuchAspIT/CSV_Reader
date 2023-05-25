@@ -12,9 +12,11 @@ namespace CSV_Reader
         Adder<Account, CsvProgramTestContext> adder;
 
 
+        //Constructor initializing all needed variables/objects
+        //Considering moving to seperate method
         public Service()
         {
-            connectionString = SettingsReader.GetConnectionString();
+            connectionString = SettingsReader.GetConnectionString("Settings.txt");
             context = new(connectionString);
             adder = new Adder<Account, CsvProgramTestContext>(connectionString);
         }

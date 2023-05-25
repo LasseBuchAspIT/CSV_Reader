@@ -62,6 +62,7 @@ namespace Lib
             return (list, delete);
         }
 
+        //done to remove header
         public (bool asd, Stream str) GetBoolAndCutStreamToSize(Stream stream)
         {
             string line;
