@@ -27,8 +27,9 @@ namespace CSV_Service
             var assembly = Assembly.GetExecutingAssembly();
             CsvProgramTestContext context = new(SettingsReader.GetConnectionString());
 
-            var auth = BasicAuthentication.Create();
 
+            Console.WriteLine("adding users");
+            var auth = BasicAuthentication.Create();
             foreach(User user in context.Users)
             {
                 auth.Add(user.Name, user.Password);

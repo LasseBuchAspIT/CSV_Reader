@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace CSV_Service
 {
     public class Program
@@ -10,7 +12,8 @@ namespace CSV_Service
                     services.AddHostedService<Worker>();
                 })
                 .Build();
-
+            CultureInfo.CurrentCulture = new("da-DK");
+            Thread.CurrentThread.CurrentCulture = new("da-DK");
             host.Run();
         }
     }
