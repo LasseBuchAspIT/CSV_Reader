@@ -48,7 +48,7 @@ namespace CSV_Service
             .Authentication(auth)
             .Index(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])));
 
-            //need to move port to seperate var
+
             Console.WriteLine("GenHttp Starting on port " + port);
             GenHTTP.Engine.Host.Create()
                     .Console()
