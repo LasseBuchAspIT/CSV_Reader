@@ -28,6 +28,9 @@ namespace CSV_Service
             var assembly = Assembly.GetExecutingAssembly();
             Console.WriteLine("Getting connectionString");
             CsvProgramTestContext context = new(SettingsReader.GetConnectionString("Settings.txt"));
+            Console.WriteLine("Getting Port");
+            ushort port = SettingsReader.GetPort("Settings.txt");
+
 
 
             Console.WriteLine("Adding users");
@@ -46,10 +49,10 @@ namespace CSV_Service
             .Index(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])));
 
             //need to move port to seperate var
-            Console.WriteLine("GenHttp Starting on port " + SettingsReader.GetPort("Settings.txt"));
+            Console.WriteLine("GenHttp Starting on port " + port);
             GenHTTP.Engine.Host.Create()
                     .Console()
-                    .Port(SettingsReader.GetPort("Settings.txt"))
+                    .Port(port)
                     .Defaults()
                     .Handler(PageLayout)
                     .Run();
