@@ -3,11 +3,13 @@ using GenHTTP.Api.Protocol;
 using CSV_Reader.DAL;
 using Lib;
 using Microsoft.IdentityModel.Tokens;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CSV_Reader
 {
     public class Service
     {
+        private readonly string dir;
         private readonly string connectionString;
         CsvProgramTestContext context;
         Adder<Account, CsvProgramTestContext> adder;
@@ -17,7 +19,8 @@ namespace CSV_Reader
         //Considering moving to seperate method
         public Service()
         {
-            connectionString = SettingsReader.GetConnectionString("Settings.txt");
+            dir = System.AppDomain.CurrentDomain.BaseDirectory;
+            connectionString = SettingsReader.GetConnectionString(dir + "/Settings.txt");
             context = new(connectionString);
             adder = new Adder<Account, CsvProgramTestContext>(connectionString);
         }
@@ -31,7 +34,7 @@ namespace CSV_Reader
             adder.AddStreamToDb(input);
 
             //recreate context to get changes
-            context = new(SettingsReader.GetConnectionString("Settings.txt"));
+            context = new(SettingsReader.GetConnectionString(dir + "/Settings.txt"));
             return new ValueTask<Task>();
         }
 

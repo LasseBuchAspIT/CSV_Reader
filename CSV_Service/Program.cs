@@ -448,19 +448,27 @@ namespace CSV_Service
 
                 if (arg.Contains("/i"))
                 {
-                    //InstallService();
+                    ServiceInstaller.Install("Csv_reader", "Csv_Reader", "Csv_Reader");
+                    Console.WriteLine("Installed Service");
                 }
-            }
-
-            IHost host = Host.CreateDefaultBuilder(args)
-                .ConfigureServices(services =>
+                else if(arg.Contains("/u"))
                 {
-                    services.AddHostedService<Worker>();
-                })
-                .Build();
+                    ServiceInstaller.Uninstall("Csv_reader");
+                    Console.WriteLine("Uninstalled Service");
+
+                }
+                return;
+            }
+            IHost host = Host.CreateDefaultBuilder(args)
+                        .ConfigureServices(services =>
+                        {
+                            services.AddHostedService<Worker>();
+                        })
+                        .Build();
             CultureInfo.CurrentCulture = new("da-DK");
             Thread.CurrentThread.CurrentCulture = new("da-DK");
             host.Run();
+
         }
     }
 }
