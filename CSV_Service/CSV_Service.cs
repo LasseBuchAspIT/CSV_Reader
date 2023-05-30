@@ -25,14 +25,14 @@ namespace CSV_Service
     {
         public void Run()
         {
+            //get variables from settings
             var assembly = Assembly.GetExecutingAssembly();
             Console.WriteLine("Getting connectionString");
             CsvProgramTestContext context = new(SettingsReader.GetConnectionString("Settings.txt"));
             Console.WriteLine("Getting Port");
             ushort port = SettingsReader.GetPort("Settings.txt");
 
-
-
+            //add users to auth
             Console.WriteLine("Adding users");
             var auth = BasicAuthentication.Create();
             foreach(User user in context.Users)
@@ -48,7 +48,7 @@ namespace CSV_Service
             .Authentication(auth)
             .Index(Content.From(Resource.FromAssembly(assembly.GetManifestResourceNames()[0])));
 
-
+            //start site
             Console.WriteLine("GenHttp Starting on port " + port);
             GenHTTP.Engine.Host.Create()
                     .Console()

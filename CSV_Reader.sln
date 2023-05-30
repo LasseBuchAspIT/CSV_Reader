@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lib", "Lib\Lib.csproj", "{1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{6358BE86-F97E-4EA9-A1AA-BF81B309C900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSV_Service", "CSV_Service\CSV_Service.csproj", "{687103EC-EC44-4E39-9A7E-8D4CA2EA4E46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSV_Service", "CSV_Service\CSV_Service.csproj", "{687103EC-EC44-4E39-9A7E-8D4CA2EA4E46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

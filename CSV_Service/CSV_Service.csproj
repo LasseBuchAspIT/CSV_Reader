@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CliWrap" Version="3.6.3" />
     <PackageReference Include="GenHTTP.Core" Version="6.4.0" />
     <PackageReference Include="GenHTTP.Modules.Authentication" Version="6.4.0" />
     <PackageReference Include="GenHTTP.Modules.Webservices" Version="6.4.0" />
