@@ -444,20 +444,25 @@ namespace CSV_Service
         {
             if(args.Length != 0 &&  System.Environment.UserInteractive)
             {
-                string arg = args[0].ToLower();
+                string arg = args[0].Substring(0,2).ToLower();
 
-                if (arg.Contains("/i"))
+                if (arg == "/i")
                 {
-                    ServiceInstaller.Install("Csv_reader", "Csv_Reader", "Csv_Reader");
-                    Console.WriteLine("Installed Service");
+                    ServiceInstaller.Install("CSV_Reader", "CSV_Reader", System.AppDomain.CurrentDomain.BaseDirectory + "CSV_Service.exe");
+                    Console.WriteLine("Installed Service: " + System.AppDomain.CurrentDomain.BaseDirectory + "CSV_Service.exe");
+                    return;
                 }
-                else if(arg.Contains("/u"))
+                else if(arg == "/u")
                 {
                     ServiceInstaller.Uninstall("Csv_reader");
                     Console.WriteLine("Uninstalled Service");
+                    return;
 
                 }
-                return;
+                else if (arg != "/r")
+                {
+                    return;
+                }
             }
             IHost host = Host.CreateDefaultBuilder(args)
                         .ConfigureServices(services =>
