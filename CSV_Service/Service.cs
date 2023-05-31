@@ -4,6 +4,7 @@ using CSV_Reader.DAL;
 using Lib;
 using Microsoft.IdentityModel.Tokens;
 using static System.Net.Mime.MediaTypeNames;
+using CSV_Service;
 
 namespace CSV_Reader
 {
@@ -19,7 +20,7 @@ namespace CSV_Reader
         //Considering moving to seperate method
         public Service()
         {
-            dir = System.AppDomain.CurrentDomain.BaseDirectory;
+            dir = "C:/Program Files/CSVTest/";
             connectionString = SettingsReader.GetConnectionString(dir + "/Settings.txt");
             context = new(connectionString);
             adder = new Adder<Account, CsvProgramTestContext>(connectionString);
