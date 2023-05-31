@@ -25,12 +25,13 @@ namespace CSV_Service
     {
         public void Run()
         {
+            string dir = "C:/Program Files/CSVTest/";
             //get variables from settings
             var assembly = Assembly.GetExecutingAssembly();
             Console.WriteLine("Getting connectionString");
-            CsvProgramTestContext context = new(SettingsReader.GetConnectionString("Settings.txt"));
+            CsvProgramTestContext context = new(SettingsReader.GetConnectionString(dir + "Settings.txt"));
             Console.WriteLine("Getting Port");
-            ushort port = SettingsReader.GetPort("Settings.txt");
+            ushort port = SettingsReader.GetPort(dir + "Settings.txt");
 
             //add users to auth
             Console.WriteLine("Adding users");

@@ -1,6 +1,6 @@
 using System.Globalization;
 using System.Runtime.InteropServices;
-using CliWrap;
+using Microsoft.Extensions.Hosting.WindowsServices;
 
 namespace CSV_Service
 {
@@ -310,7 +310,7 @@ namespace CSV_Service
 
             while (status.dwCurrentState == waitStatus)
             {
-                int dwWaitTime = status.dwWaitHint / (int)10;
+                int dwWaitTime = status.dwWaitHint;
 
 
 
@@ -464,14 +464,15 @@ namespace CSV_Service
                     return;
                 }
             }
+
+
+
             IHost host = Host.CreateDefaultBuilder(args)
                         .ConfigureServices(services =>
                         {
                             services.AddHostedService<Worker>();
-                        })
+                        }).UseWindowsService()
                         .Build();
-            CultureInfo.CurrentCulture = new("da-DK");
-            Thread.CurrentThread.CurrentCulture = new("da-DK");
             host.Run();
 
         }
