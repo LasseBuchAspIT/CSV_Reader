@@ -5,6 +5,8 @@ using Lib;
 using Microsoft.IdentityModel.Tokens;
 using static System.Net.Mime.MediaTypeNames;
 using CSV_Service;
+using GenHTTP.Modules.Authentication;
+using GenHTTP.Api.Content.Authentication;
 
 namespace CSV_Reader
 {
@@ -31,9 +33,15 @@ namespace CSV_Reader
         [ResourceMethod(RequestMethod.PUT, "AddFile")]
         public ValueTask<Task> AddFile(bool deleteExisting, Stream input, IRequest request)
         {
+            int user = context.Users.Where(a => a.Name == request.GetUser<IUser>().DisplayName).FirstOrDefault().Id;
+            (List<Account> l, bool b) values = Reader<Account>.ConvertStreamToObjects(input);
 
-            adder.AddStreamToDb(input);
+            foreach(Account a in values.l)
+            {
+                a.UserId = user;
+            }
 
+            adder.AddListToDb(values.l, values.b);
             //recreate context to get changes
             context = new(SettingsReader.GetConnectionString(dir + "/Settings.txt"));
             return new ValueTask<Task>();
@@ -44,17 +52,20 @@ namespace CSV_Reader
         {
             //quick makeshift solution, need to fix
             List<Account> list = context.Accounts.ToList();
-            if (list[0].Fsa.IsNullOrEmpty())
+            foreach(Account a in list)
             {
-                list[0].Fsa = "";
-            }
-            if (list[0].Vip.IsNullOrEmpty())
-            {
-                list[0].Vip = "";
-            }
-            if (list[0].UserId == null)
-            {
-                list[0].UserId = 0;
+                if (a.Fsa.IsNullOrEmpty())
+                {
+                   a.Fsa = "";
+                }
+                if (a.Vip.IsNullOrEmpty())
+                {
+                    a.Vip = "";
+                }
+                if (a.UserId == null)
+                {
+                    a.UserId = 0;
+                }
             }
             return list;
 

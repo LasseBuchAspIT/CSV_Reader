@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Lib
 {
-    public class Creator<T> where T : class
+    public static class Creator<T> where T : class
     {
-        public T CreateT(List<string> para)
+        public static T CreateT(List<string> para)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Lib
         }
 
         //Converts all values to the correct type for constructor
-        private List<object> ValidateParams(List<string> para)
+        private static List<object> ValidateParams(List<string> para)
         {
             List<object> returnList = new List<object>();
             Type t = typeof(T);

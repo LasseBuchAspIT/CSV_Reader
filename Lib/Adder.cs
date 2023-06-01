@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ namespace Lib
 {
     public class Adder<T1, T2> where T1 : class where T2 : DbContext
     {
-        Reader<T1> reader;
         DbContext dbContext;
         DbSet<T1> dbSet;
         CustomDbContextFactory<T2> customDb = new();
@@ -18,7 +18,6 @@ namespace Lib
         {
             try
             {
-                this.reader = new Reader<T1>();
                 Console.WriteLine("creating customDbContext");
                 this.dbContext = customDb.CreateDbContext(ConnectionString);
 
@@ -38,7 +37,7 @@ namespace Lib
 
         }
 
-        private void AddListToDb(List<T1> list, bool deleteExisitng)
+        public void AddListToDb(List<T1> list, bool deleteExisitng)
         {
             //delete all entries in database
             if (deleteExisitng)
@@ -65,11 +64,11 @@ namespace Lib
 
 
         //Takes a stream and adds it to the database
-        public void AddStreamToDb(Stream stream)
+        public void AddStreamToDb(Stream stream, int? user_id = null)
         {
-            //trupple to only need to convert stream once
-            //convert stream to a list of objects<T> and a bool for checking if should delete existing database
-            (List<T1> list, bool delete) values = reader.ConvertStreamToObjects(stream);
+                //trupple to only need to convert stream once
+                //convert stream to a list of objects<T> and a bool for checking if should delete existing database
+                (List<T1> list, bool delete) values = Reader<T1>.ConvertStreamToObjects(stream);
 
             //add values to db
             AddListToDb(values.list, values.delete);
