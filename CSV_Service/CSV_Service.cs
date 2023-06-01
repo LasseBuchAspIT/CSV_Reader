@@ -25,7 +25,7 @@ namespace CSV_Service
     {
         public void Run()
         {
-            string dir = "C:/Program Files/CSVTest/";
+            string dir = Assembly.GetExecutingAssembly().Location;
             //get variables from settings
             var assembly = Assembly.GetExecutingAssembly();
             Console.WriteLine("Getting connectionString");

@@ -3,8 +3,6 @@ using GenHTTP.Api.Protocol;
 using CSV_Reader.DAL;
 using Lib;
 using Microsoft.IdentityModel.Tokens;
-using static System.Net.Mime.MediaTypeNames;
-using CSV_Service;
 using GenHTTP.Modules.Authentication;
 using GenHTTP.Api.Content.Authentication;
 
@@ -12,7 +10,7 @@ namespace CSV_Reader
 {
     public class Service
     {
-        private readonly string dir;
+        private string dir;
         private readonly string connectionString;
         CsvProgramTestContext context;
         Adder<Account, CsvProgramTestContext> adder;
@@ -22,8 +20,8 @@ namespace CSV_Reader
         //Considering moving to seperate method
         public Service()
         {
-            dir = "C:/Program Files/CSVTest/";
-            connectionString = SettingsReader.GetConnectionString(dir + "/Settings.txt");
+            dir = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            connectionString = SettingsReader.GetConnectionString(dir + "Settings.txt");
             context = new(connectionString);
             adder = new Adder<Account, CsvProgramTestContext>(connectionString);
         }
