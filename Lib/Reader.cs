@@ -4,16 +4,15 @@ using System.Text;
 
 namespace Lib
 {
-    public class Reader<T> where T : class
+    public static class Reader<T> where T : class
     {
-        public (List<T> list, bool delete) ConvertStreamToObjects(Stream stream)
+        public static (List<T> list, bool delete) ConvertStreamToObjects(Stream stream)
         {
             bool delete = false;
             List<T> list = new List<T>();
             string line;
 
             //create instance of creator
-            Creator<T> creator = new();
 
 
             using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
@@ -48,7 +47,7 @@ namespace Lib
                         string[] args = line.Split(";");
 
                         //pass valuesi into creator to convert to object and add to list
-                        list.Add(creator.CreateT(args.ToList()));
+                        list.Add(Creator<T>.CreateT(args.ToList()));
                         Console.WriteLine("Object added to list Succesfully");
                     }
                     catch 
@@ -63,7 +62,7 @@ namespace Lib
         }
 
         //done to remove header
-        public (bool asd, Stream str) GetBoolAndCutStreamToSize(Stream stream)
+        public static (bool asd, Stream str) GetBoolAndCutStreamToSize(Stream stream)
         {
             string line;
             Stream ReturnStr = null;
