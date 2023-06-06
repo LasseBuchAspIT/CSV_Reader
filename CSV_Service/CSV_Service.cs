@@ -18,6 +18,7 @@ using Lib;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using CSV_Reader.DAL;
 using Microsoft.Identity.Client;
+using System.Diagnostics;
 
 namespace CSV_Service
 {
@@ -25,13 +26,13 @@ namespace CSV_Service
     {
         public void Run()
         {
-            string dir = Assembly.GetExecutingAssembly().Location;
+            string dir = System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
             //get variables from settings
             var assembly = Assembly.GetExecutingAssembly();
             Console.WriteLine("Getting connectionString");
-            CsvProgramTestContext context = new(SettingsReader.GetConnectionString(dir + "Settings.txt"));
+            CsvProgramTestContext context = new(SettingsReader.GetConnectionString(dir + "/Settings.txt"));
             Console.WriteLine("Getting Port");
-            ushort port = SettingsReader.GetPort(dir + "Settings.txt");
+            ushort port = SettingsReader.GetPort(dir + "/Settings.txt");
 
             //add users to auth
             Console.WriteLine("Adding users");

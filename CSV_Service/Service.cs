@@ -5,6 +5,8 @@ using Lib;
 using Microsoft.IdentityModel.Tokens;
 using GenHTTP.Modules.Authentication;
 using GenHTTP.Api.Content.Authentication;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace CSV_Reader
 {
@@ -20,8 +22,9 @@ namespace CSV_Reader
         //Considering moving to seperate method
         public Service()
         {
-            dir = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            connectionString = SettingsReader.GetConnectionString(dir + "Settings.txt");
+            //dir = System.Reflection.Assembly.GetExecutingAssembly().FullName;
+            dir = System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+            connectionString = SettingsReader.GetConnectionString(dir + "/Settings.txt");
             context = new(connectionString);
             adder = new Adder<Account, CsvProgramTestContext>(connectionString);
         }
