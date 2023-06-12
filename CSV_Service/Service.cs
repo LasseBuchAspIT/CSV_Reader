@@ -75,7 +75,7 @@ namespace CSV_Reader
         [ResourceMethod("GetById")]
         public Account GetAccountById(int id) 
         {
-            return context.Accounts.Where(a => a.CostumerNumber == id).FirstOrDefault();
+            return context.Accounts.Where(a => a.CustomerNumber == id).FirstOrDefault();
         }
 
        

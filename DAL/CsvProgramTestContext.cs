@@ -28,15 +28,15 @@ public partial class CsvProgramTestContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.CostumerNumber).HasName("PK_Accounts_1");
+            entity.HasKey(e => e.CustomerNumber).HasName("PK_Accounts_1");
 
-            entity.Property(e => e.CostumerNumber)
+            entity.Property(e => e.CustomerNumber)
                 .ValueGeneratedNever()
-                .HasColumnName("Costumer_Number");
-            entity.Property(e => e.CostumerName)
+                .HasColumnName("Customer_Number");
+            entity.Property(e => e.CustomerName)
                 .HasMaxLength(200)
                 .IsFixedLength()
-                .HasColumnName("Costumer_Name");
+                .HasColumnName("Customer_Name");
             entity.Property(e => e.Fsa)
                 .HasMaxLength(30)
                 .IsFixedLength()

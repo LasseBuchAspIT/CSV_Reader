@@ -5,10 +5,10 @@ namespace CSV_Reader.DAL;
 
 public partial class Account
 {
-    public Account(int costumerNumber, string costumerName, int phone, string system, int outerNumber, string? fsa, string? vip, int? userId)
+    public Account(int customerNumber, string CustomerName, int phone, string system, int outerNumber, string? fsa, string? vip, int? userId)
     {
-        CostumerNumber = costumerNumber;
-        CostumerName = costumerName;
+        CustomerNumber = customerNumber;
+        CustomerName = CustomerName;
         Phone = phone;
         System = system;
         OuterNumber = outerNumber;
@@ -17,9 +17,9 @@ public partial class Account
         UserId = userId;
     }
 
-    public int CostumerNumber { get; set; }
+    public int CustomerNumber { get; set; }
 
-    public string CostumerName { get; set; } = null!;
+    public string CustomerName { get; set; } = null!;
 
     public int Phone { get; set; }
 
@@ -37,7 +37,7 @@ public partial class Account
     {
         if (obj is Account a)
         {
-            if(a.CostumerNumber == CostumerNumber)
+            if(a.CustomerName == CustomerName)
             {
                 return true;
             }
